@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mkdir "Day_$1"
+cd "Day_$1"
+touch part1.ts
+touch part2.ts
+touch input.txt
