@@ -28,7 +28,7 @@ for (const game of gamesArr) {
     const count = +e.split(" ")[0];
     const color = e.split(" ")[1].toLocaleLowerCase();
     if (max.has(color)) {
-      if (count > max.get(color)) {
+      if (count > max.get(color)!) {
         max.set(color, count);
       }
     } else {
