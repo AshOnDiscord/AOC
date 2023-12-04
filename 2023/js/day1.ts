@@ -1,6 +1,6 @@
 export {};
 
-const input = Bun.file("../day1-trebuchet.txt");
+const input = Bun.file("../day1.txt");
 const inputArr = (await input.text()).trim().split("\n");
 
 const result: string[] = [];

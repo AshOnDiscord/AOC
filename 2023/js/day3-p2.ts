@@ -11,7 +11,7 @@ export {};
 // ......755.
 // ...$.*....
 // .664.598..`;
-const input = await Bun.file("../day3-gear-ratios.txt").text();
+const input = await Bun.file("../day3.txt").text();
 
 const charArr = input
   .trim()
