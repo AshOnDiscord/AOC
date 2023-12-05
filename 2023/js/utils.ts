@@ -1,4 +1,37 @@
-class Point {
+export class Grid {
+  private points: (Point | null)[][] = [];
+  constructor(public width: number, public height: number) {}
+  get(x: number, y: number): Point | null {
+    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+      return null;
+    }
+    return this.points[y][x];
+  }
+  set(x: number, y: number, value: Point) {
+    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+      return;
+    }
+    this.points[y][x] = value;
+  }
+  setPoint(point: Point) {
+    this.set(point.x, point.y, point);
+  }
+  setPoints(points: Point[]) {
+    points.forEach((point) => this.setPoint(point));
+  }
+  reset() {
+    this.points = [];
+    for (let y = 0; y < this.height; y++) {
+      const row = [];
+      for (let x = 0; x < this.width; x++) {
+        row.push(null);
+      }
+      this.points.push(row);
+    }
+  }
+}
+
+export class Point {
   constructor(public x: number, public y: number, public grid: Grid) {}
 
   getNeighbors(): (Point | null)[] {
@@ -38,7 +71,7 @@ class Point {
   }
 }
 
-enum Direction {
+export enum Direction {
   // 1 2 3
   // 8   4
   // 7 6 5
@@ -53,35 +86,39 @@ enum Direction {
   left,
 }
 
-class Grid {
-  private points: (Point | null)[][] = [];
-  constructor(public width: number, public height: number) {}
-  get(x: number, y: number): Point | null {
-    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
-      return null;
-    }
-    return this.points[y][x];
+/**
+ * Iterative binary search
+ * @param array - Sorted array of elements
+ * @param target - Element to find
+ * @returns Index of element if found, null otherwise
+ * @example
+ * Example usage:
+ * ```ts
+ * const array = [5, 2, 9, 1, 7].sort(); // [1, 2, 5, 7, 9]
+ * const target = 2;
+ * const index = binarySearch(arr, x); // 1
+ * const element = arr[index];
+ * ```
+ * @example
+ * Example without element
+ * ```ts
+ * const array = [1, 2, 3, 4, 5]
+ * const target = 6;
+ * const index = binarySearch(arr, x); // null
+ * ```
+ */
+export const binarySearch = function (array: any[], target: any): any {
+  let start = 0,
+    end = array.length - 1;
+
+  while (start <= end) {
+    // Find the mid index
+    let mid = Math.floor((start + end) / 2);
+    // If element is present at mid return index
+    if (array[mid] === target) return mid;
+    // Split the array
+    else if (array[mid] < target) start = mid + 1;
+    else end = mid - 1;
   }
-  set(x: number, y: number, value: Point) {
-    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
-      return;
-    }
-    this.points[y][x] = value;
-  }
-  setPoint(point: Point) {
-    this.set(point.x, point.y, point);
-  }
-  setPoints(points: Point[]) {
-    points.forEach((point) => this.setPoint(point));
-  }
-  reset() {
-    this.points = [];
-    for (let y = 0; y < this.height; y++) {
-      const row = [];
-      for (let x = 0; x < this.width; x++) {
-        row.push(null);
-      }
-      this.points.push(row);
-    }
-  }
-}
+  return null; // no element found
+};
