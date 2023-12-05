@@ -7,7 +7,7 @@ use std::path::Path;
 // b.iter(|| {
 pub fn main() {
   // Create a path to the desired file
-  let path = Path::new("../day1-trebuchet.txt");
+  let path = Path::new("../day1.txt");
 
   // Open the path in read-only mode, returns `io::Result<File>`
   let mut file = match File::open(&path) {
