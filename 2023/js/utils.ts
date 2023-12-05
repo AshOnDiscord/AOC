@@ -122,3 +122,68 @@ export const binarySearch = function (array: any[], target: any): any {
   }
   return null; // no element found
 };
+
+const numberRegex = /-*\d+(\.\d+)?/; // matches any number(ints, floats, and negatives)          -3.14
+const numberRegexGlobal = /-*\d+(\.\d+)?/g; // matches any number(ints, floats, and negatives)
+const positiveNumberRegex = /\d+(\.\d+)?/; // matches any positive number(ints and floats)        3.14
+const positiveNumberRegexGlobal = /\d+(\.\d+)?/g; // matches any positive number(ints and floats)
+const integerRegex = /-*\d+/; // matches any integer(ints and negatives)                         -3, 14
+const integerRegexGlobal = /-*\d+/g; // matches any integer(ints and negatives)
+const positiveIntegerRegex = /\d+/; // matches any positive integer(ints)                        3, 14
+const positiveIntegerRegexGlobal = /\d+/g; // matches any positive integer(ints)
+
+/**
+ * Returns all numbers in a string
+ * @param String - String to search
+ * @param {getNumbersOptions} [options={negatives:true, floats:true}] - Options
+ * @param {boolean} [options.negatives=true]- Whether to include negative numbers
+ * @param {boolean} [options.floats=true] - Whether to include floats
+ * @returns Array of numbers
+ * @description Options do not cause the regex to excluse floats, or negatives, they just ignore the - or . in the number so -3.14 would be 3.14 or 3, 14 not just 3
+ * If you want 3.14 to just be 3, just use Math.floor() on the result. To exclude floats fully you can do result.filter(Number.isInteger)
+ * If you want to exclude negatives fully you can do result.filter((num) => num >= 0)
+ * @example
+ * Example usage:
+ * ```ts
+ * const string = "7pqr3.14sty-9x"
+ * const numbers = getNumbers(string); // [7, 3.14, -9]
+ * ```
+ * @example
+ * Only positive integers
+ * ```ts
+ * const string = "7pqr3.14sty-9x"
+ * const numbers = getNumbers(string, { negatives: false, floats: false }); // [7, 3, 9]
+ * ```
+ * @example
+ * Only positive numbers
+ * ```ts
+ * const string = "7pqr3.14sty-9x"
+ * const numbers = getNumbers(string, { negatives: false }); // [7, 3.14, 9]
+ * ```
+ * @example
+ * Only integers
+ * ```ts
+ * const string = "7pqr3.14sty-9x"
+ * const numbers = getNumbers(string, { floats: false }); // [7, 3, 14, -9]
+ * ```
+ */
+const getNumbers = (String: string, options?: getNumbersOptions): number[] => {
+  let regex;
+  if (options?.negatives ?? true) {
+    regex = options?.floats ?? true ? numberRegexGlobal : integerRegexGlobal;
+  } else {
+    regex = options?.floats ?? true ? positiveNumberRegexGlobal : positiveIntegerRegexGlobal;
+  }
+  const matches = String.match(regex);
+  if (matches) {
+    return matches.map((match) => parseFloat(match));
+  }
+  return [];
+};
+
+interface getNumbersOptions {
+  negatives?: boolean;
+  floats?: boolean;
+}
+
+console.log(getNumbers("7pqr3.14sty-9x"));
