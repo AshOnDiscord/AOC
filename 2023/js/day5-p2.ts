@@ -1,6 +1,6 @@
 (async () => {
-  const input = await Bun.file("../day5-mini.txt").text();
-  // const input = await Bun.file("../day5.txt").text();
+  // const input = await Bun.file("../day5-mini.txt").text();
+  const input = await Bun.file("../day5.txt").text();
 
   const temp = input.split("\n\n");
   const tempSeeds = temp
