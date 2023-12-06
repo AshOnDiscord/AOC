@@ -27,9 +27,9 @@ gameLoop: for (const game of gamesArr) {
     .split(",")
     .map((e) => e.trim());
   for (const e of colors) {
-    const count = e.split(" ")[0];
+    const count = parseInt(e.split(" ")[0]);
     const color = e.split(" ")[1].toLocaleLowerCase();
-    if (count > limits.get(color)) {
+    if (count > limits.get(color)!) {
       continue gameLoop;
     }
   }
