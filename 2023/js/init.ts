@@ -8,8 +8,8 @@ if (day === "" || isNaN(parseInt(day))) {
 
 const boilerplateFile = await(Bun.file("./template.ts")).text();
 const boilerplate = boilerplateFile.replaceAll("{{dayNumber}}", day);
-await Bun.write(`day${day}-p1.ts`, boilerplateFile);
-await Bun.write(`day${day}-p2.ts`, boilerplateFile);
+await Bun.write(`day${day}-p1.ts`, boilerplate);
+await Bun.write(`day${day}-p2.ts`, boilerplate);
 
 const cookie = Bun.env.AOC_TOKEN;
 const puzzleInput = await(
