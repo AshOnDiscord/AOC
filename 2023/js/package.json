@@ -1,14 +1,11 @@
 {
   "name": "js",
   "module": "index.ts",
-  "type": "module",
   "devDependencies": {
     "bun-types": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "dependencies": {
-    "node-interval-tree": "^2.1.2"
-  }
+  "type": "module"
 }
