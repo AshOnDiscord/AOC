@@ -186,4 +186,7 @@ interface getNumbersOptions {
   floats?: boolean;
 }
 
-console.log(getNumbers("7pqr3.14sty-9x"));
+// console.log(getNumbers("7pqr3.14sty-9x"));
+
+export const gcd = (a, b) => a ? gcd(b % a, a) : b;
+export const lcm = (a, b) => a * b / gcd(a, b);
