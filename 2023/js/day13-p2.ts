@@ -2,8 +2,8 @@ import { get } from "http";
 
 export {};
 
-const input = (await Bun.file("../day13-mini.txt").text()).trim();
-// const input = (await Bun.file("../day13.txt").text()).trim();
+// const input = (await Bun.file("../day13-mini.txt").text()).trim();
+const input = (await Bun.file("../day13.txt").text()).trim();
 
 const patterns = input
   .split("\n\n")
@@ -38,15 +38,15 @@ const rotate = (pattern: boolean[][]): boolean[][] => {
 }
 
 const getSymmetryLine = (pattern: boolean[][]): number => {
-  for (let i = 0; i < pattern.length - 1; i++) {
+  row: for (let i = 0; i < pattern.length - 1; i++) {
     const row1 = pattern[i];
     const row2 = pattern[i+1];
 
     let hasFlipped = false;
-    if (hash(row1) === hash(row2)) {
+    // if (hash(row1) === hash(row2)) {
       // return i;
       // expand out to the left and right until we find a difference or we hide a edge
-      let offset = 1;
+      let offset = 0;
       while (true) {
         const left = pattern[i - offset];
         const right = pattern[i + 1 + offset];
@@ -55,26 +55,29 @@ const getSymmetryLine = (pattern: boolean[][]): number => {
           if (hasFlipped) {
             return i;
           }
-          return NaN;
+          continue row; // try smt else
         }
         if (hash(left) === hash(right)) {
           offset++;
         } else {
           // break; // we found a difference, discard result
           if (hasFlipped) {// second difference, discard result
-            return NaN;
+            // return NaN;
+            continue row;
           }
           for (let j = 0; j < left.length; j++) {
             if (left[j] !== right[j]) {
               if (hasFlipped) { // second difference, discard result
-                return NaN;
+                // return NaN;
+                continue row;
               }
               hasFlipped = true;
             }
           }
+          offset++;
         }
       }
-    }
+    // }
   }
   // throw new Error("No symmetry line found");
   return NaN;
@@ -90,7 +93,8 @@ for (let i = 0; i < patterns.length; i++) {
   //   pattern = rotate(pattern); // even is column symmetry
   // }
   // console.log(patterns[i].map((e) => hash(e)).join("\n"));
-  let line = getSymmetryLine(rotate(pattern)) + 1;
+  // let line = getSymmetryLine(rotate(pattern)) + 1;
+  let line = NaN
 
   let points = 0;
 
