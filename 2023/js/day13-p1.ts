@@ -1,5 +1,3 @@
-import { get } from "http";
-
 export {};
 
 const input = (await Bun.file("../day13-mini.txt").text()).trim();
