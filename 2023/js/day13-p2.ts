@@ -1,7 +1,7 @@
- export {};
+export {};
 
-const input = (await Bun.file("../day13-mini.txt").text()).trim();
-// const input = (await Bun.file("../day13.txt").text()).trim();
+// const input = (await Bun.file("../day13-mini.txt").text()).trim();
+const input = (await Bun.file("../day13.txt").text()).trim();
 
 const lines = input.trim().split("\n\n").map(grid => {
   return grid.split("\n");
@@ -27,8 +27,19 @@ const fsl = function findSymmetryLine(grid: string[]): number {
     const minLength = Math.min(left.length, right.length);
     const leftTrimmed = left.slice(left.length - minLength).reverse();
     const rightTrimmed = right.slice(0, minLength);
-    const match = leftTrimmed.join("") === rightTrimmed.join("");
-    if (match) return index
+    // const match = leftTrimmed.join("") === rightTrimmed.join("");
+    // if (match) return index
+    const matches: number = leftTrimmed.map((leftRow, rowIndex) => {
+      const rightRow = rightTrimmed[rowIndex].split("");
+      const mismatches = leftRow.split("").filter((leftChar, charIndex) => {
+        return leftChar !== rightRow[charIndex];
+      });
+      return mismatches.length;
+    }).reduce((acc, cur) => acc + cur, 0);
+
+    if (matches === 1) {
+      return index;
+    }
   }
   return 0;
 }
